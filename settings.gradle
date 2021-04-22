@@ -1,0 +1,2 @@
+include ':app', ':languageofleo'
+rootProject.name='LolInterpreter'
