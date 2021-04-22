@@ -56,6 +56,8 @@ sealed class Token {
     fun isLiteralValue() =
         this is LiteralIntToken || this is LiteralStringToken || this is LiteralDoubleToken
 
+    fun isLiteralString() = this is LiteralStringToken
+
     fun isTokenName() = this is NameToken
 
     fun isOpenParenthesis() = this is OpenParenthesisToken

@@ -84,6 +84,40 @@ class TokenGeneratorTest {
     }
 
     @Test
+    fun `test generate tokens variable string long`() {
+        val CODE_TEST = "variable string y = \"leonardo viana casasanta\";"
+
+        val tokenGenerator = TokenGenerator()
+        val tokens = tokenGenerator.generateTokens(CODE_TEST)
+
+        Assert.assertEquals(10, tokens.size )
+
+        assert(tokens[0] is Token.VariableToken)
+
+        assert(tokens[1] is Token.StringTypeToken)
+
+        assert(tokens[2] is Token.NameToken)
+        assert((tokens[2] as Token.NameToken).name == "y")
+
+        assert(tokens[3] is Token.AssignValueToken)
+
+        assert(tokens[4] is Token.StringBracket)
+
+        assert(tokens[5] is Token.LiteralStringToken)
+        assert((tokens[5] as Token.LiteralStringToken).literalValue == "leonardo")
+
+        assert(tokens[6] is Token.LiteralStringToken)
+        assert((tokens[6] as Token.LiteralStringToken).literalValue == "viana")
+
+        assert(tokens[7] is Token.LiteralStringToken)
+        assert((tokens[7] as Token.LiteralStringToken).literalValue == "casasanta")
+
+        assert(tokens[8] is Token.StringBracket)
+
+        assert(tokens[9] is Token.CloseSentenceToken)
+    }
+
+    @Test
     fun `test generate tokens for assign variable int`() {
         val testCode = "variable integer x=10;"
         val tokenGenerator = TokenGenerator()
@@ -125,6 +159,5 @@ class TokenGeneratorTest {
         assert((tokens[10] as Token.LiteralIntToken).literalValue == 11)
         assert(tokens[11] is Token.CloseSentenceToken)
     }
-
 
 }

@@ -2,6 +2,7 @@ package lvc.com.languageofleo
 
 import org.junit.Assert
 import org.junit.Test
+import kotlin.math.log
 
 class InterpreterTest  {
 
@@ -115,6 +116,22 @@ class InterpreterTest  {
         Assert.assertEquals(60, logs[17].memoryStateBefore.peek().varValue)
         Assert.assertEquals(Print::class.java.simpleName, logs[17].executedInstruction)
         Assert.assertEquals(EndProgram::class.java.simpleName, logs[18].executedInstruction)
+    }
+
+    @Test
+    fun testSimpleStringPrint() {
+        val testCode =
+                "    startProgram {\n" +
+                "         print(\"Hello World\");\n" +
+                "      }\n"
+
+        val interpreter = Interpreter()
+        val logs = interpreter.execute(testCode)
+
+        val log = logs.find {
+            it.executedInstruction == Print::class.java.simpleName
+        }
+        Assert.assertEquals("Hello World", log!!.memoryStateBefore.peek().varValue.toString())
     }
 
 }

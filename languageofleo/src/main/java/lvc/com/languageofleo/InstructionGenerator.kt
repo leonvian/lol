@@ -1,5 +1,6 @@
 package lvc.com.languageofleo
 
+import java.lang.StringBuilder
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -60,7 +61,11 @@ class InstructionGenerator {
             "Missing open parenthesis -> ("
         )
 
-        generatedInstructions.addAll(generateMathAssignInstructions(tokens, Token.CloseParenthesisToken))
+        if (tokens.peekFirst() == Token.StringBracket) {
+            generatedInstructions.add(createPushLiteralStringInstruction(tokens))
+        } else {
+            generatedInstructions.addAll(generateMathAssignInstructions(tokens, Token.CloseParenthesisToken))
+        }
 
         throwSyntaxExceptionIfNot(
             tokens.pullFirst().isCloseParenthesis(),
@@ -73,6 +78,20 @@ class InstructionGenerator {
 
         generatedInstructions.add(Print)
         return generatedInstructions
+    }
+
+    private fun createPushLiteralStringInstruction(tokens: List<Token>): PushLiteralOnMemory {
+        tokens.pullFirst()
+        val stringBuilder = StringBuilder()
+        while (tokens.peekFirst() != Token.StringBracket) {
+            stringBuilder.append(tokens.pullFirst().getLiteralValue())
+            if (tokens.peekFirst() != Token.StringBracket) {
+                stringBuilder.append(" ")
+            }
+        }
+        tokens.pullFirst()
+
+       return  PushLiteralOnMemory(stringBuilder.toString(), Type.STRING)
     }
 
     private fun createVariableDeclarationInstruction(tokens: List<Token>): Instruction {

@@ -62,7 +62,7 @@ class TokenGenerator {
 
         if (!ReservedWords.containReservedWord(rawValue)) {
             val newToken = when {
-                isPreviousTokenStringBracket() -> Token.LiteralStringToken(rawValue)
+                shouldCreateStringToken() -> Token.LiteralStringToken(rawValue)
                 isALiteralInt(rawValue) -> Token.LiteralIntToken(rawValue.toInt())
                 isALiteralDouble(rawValue) -> Token.LiteralDoubleToken(rawValue.toDouble())
                 else -> Token.NameToken(rawValue)
@@ -75,7 +75,11 @@ class TokenGenerator {
         throw IllegalArgumentException("Not a simple token $rawValue")
     }
 
+    private fun shouldCreateStringToken() = isPreviousTokenStringBracket() || isPreviousTokenLiteralString()
+
     private fun isPreviousTokenStringBracket() = previous?.isStringBracket() ?: false
+
+    private fun isPreviousTokenLiteralString() = previous?.isLiteralString() ?: false
 
     private fun isSimpleToken(rawValue: String) =
         ReservedWords.isReservedWord(rawValue) || !ReservedWords.containReservedWord(rawValue)
