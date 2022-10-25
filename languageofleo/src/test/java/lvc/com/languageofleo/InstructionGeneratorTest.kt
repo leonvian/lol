@@ -8,7 +8,7 @@ class InstructionGeneratorTest {
     @Test
     fun `test print with parameters`() {
         val testCode  = "print(10 + 5);"
-        val tokens = TokenGenerator().generateTokens(testCode)
+        val tokens = TokenGenerator2().generateTokens(testCode)
         val instructions = InstructionGenerator().generateInstructions(tokens)
 
         Assert.assertEquals(4, instructions.size)
@@ -21,7 +21,7 @@ class InstructionGeneratorTest {
     @Test
     fun `test long sum variables and literals`() {
         val testCode  = "variable integer z = x + y + 20 + 25;"
-        val tokens = TokenGenerator().generateTokens(testCode)
+        val tokens = TokenGenerator2().generateTokens(testCode)
         val instructions = InstructionGenerator().generateInstructions(tokens)
 
         Assert.assertEquals(9, instructions.size)
@@ -46,7 +46,7 @@ class InstructionGeneratorTest {
                     "     print(z);\n" +
                     "  }";
 
-        val tokens = TokenGenerator().generateTokens(testCode)
+        val tokens = TokenGenerator2().generateTokens(testCode)
         val instructions = InstructionGenerator().generateInstructions(tokens)
         //Assert.assertEquals(3, instructions.size)
 
@@ -101,7 +101,7 @@ class InstructionGeneratorTest {
     fun `test generate instructions for assign variable int`() {
         val testCode = "variable integer x=10;"
 
-        val tokens = TokenGenerator().generateTokens(testCode)
+        val tokens = TokenGenerator2().generateTokens(testCode)
         val instructions = InstructionGenerator().generateInstructions(tokens)
         Assert.assertEquals(3, instructions.size)
 

@@ -11,7 +11,7 @@ class Interpreter {
     private var executionPointer: Int = 0
 
     fun execute(code: String): List<InstructionLog> {
-        val tokens = TokenGenerator().generateTokens(code)
+        val tokens = TokenGenerator2().generateTokens(code)
         val instructions = InstructionGenerator().generateInstructions(tokens)
 
         val logs = execute(instructions)

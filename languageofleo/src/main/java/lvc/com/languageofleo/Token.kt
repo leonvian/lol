@@ -5,51 +5,143 @@ import java.lang.IllegalArgumentException
 
 sealed class Token {
 
-    object AssignValueToken : Token()
+    object AssignValueToken : Token()  {
+        override fun toString(): String {
+            return "AssignValueToken"
+        }
+    }
 
-    object CloseSentenceToken : Token()
+    object CloseSentenceToken : Token()  {
+        override fun toString(): String {
+            return "CloseSentenceToken"
+        }
+    }
 
-    object OperatorSumToken : Token()
+    object OperatorSumToken : Token()  {
+        override fun toString(): String {
+            return "OperatorSumToken"
+        }
+    }
 
-    object OperatorSubtractToken : Token()
+    object OperatorSubtractToken : Token()  {
+        override fun toString(): String {
+            return "OperatorSubtractToken"
+        }
+    }
 
-    object OperatorMutiplyToken : Token()
+    object OperatorMutiplyToken : Token()  {
+        override fun toString(): String {
+            return "OperatorMutiplyToken"
+        }
+    }
 
-    object OperatorDivisionToken : Token()
+    object OperatorDivisionToken : Token()  {
+        override fun toString(): String {
+            return "OperatorDivisionToken"
+        }
+    }
 
-    object MethodToken : Token()
+    object MethodToken : Token()  {
+        override fun toString(): String {
+            return "MethodToken"
+        }
+    }
 
-    object VariableToken : Token()
+    object VariableToken : Token() {
+        override fun toString(): String {
+            return "VariableToken"
+        }
+    }
 
-    class NameToken(val name: String) : Token()
+    class NameToken(val name: String) : Token() {
+        override fun toString(): String {
+            return "NameToken $name"
+        }
+    }
 
-    class LiteralStringToken(val literalValue: String) : Token()
+    class LiteralStringToken(val literalValue: String) : Token() {
+        override fun toString(): String {
+            return "LiteralStringToken $literalValue"
+        }
+    }
 
-    class LiteralDoubleToken(val literalValue: Double) : Token()
+    class LiteralDoubleToken(val literalValue: Double) : Token() {
+        override fun toString(): String {
+            return "LiteralDoubleToken $literalValue"
+        }
+    }
 
-    class LiteralIntToken(val literalValue: Int) : Token()
+    class LiteralIntToken(val literalValue: Int) : Token() {
+        override fun toString(): String {
+            return "LiteralIntToken $literalValue"
+        }
+    }
 
-    object IntTypeToken : Token()
+    object IntTypeToken : Token() {
+        override fun toString(): String {
+            return "IntTypeToken"
+        }
+    }
 
-    object StringTypeToken : Token()
+    object StringTypeToken : Token() {
+        override fun toString(): String {
+            return "StringTypeToken"
+        }
+    }
 
-    object DoubleTypeToken : Token()
+    object DoubleTypeToken : Token() {
+        override fun toString(): String {
+            return "DoubleTypeToken"
+        }
+    }
 
-    object OpenParenthesisToken : Token()
+    object OpenParenthesisToken : Token() {
+        override fun toString(): String {
+            return "OpenParenthesisToken"
+        }
+    }
 
-    object CloseParenthesisToken : Token()
+    object CloseParenthesisToken : Token() {
+        override fun toString(): String {
+            return "CloseParenthesisToken"
+        }
+    }
 
-    object OpenBlockToken : Token()
+    object OpenBlockToken : Token() {
+        override fun toString(): String {
+            return "OpenBlockToken"
+        }
+    }
 
-    object CloseBlockToken : Token()
+    object CloseBlockToken : Token() {
+        override fun toString(): String {
+            return "CloseBlockToken"
+        }
+    }
 
-    object IfToken : Token()
+    object IfToken : Token() {
+        override fun toString(): String {
+            return "IfToken"
+        }
+    }
 
-    object StartProgram : Token()
+    object StartProgram : Token() {
+        override fun toString(): String {
+            return "Start Program"
+        }
+    }
 
-    object Print : Token()
+    object Print : Token() {
+        override fun toString(): String {
+            return "Print"
+        }
+    }
 
-    object StringBracket : Token()
+    object StringBracket : Token()  {
+        override fun toString(): String {
+            return "StringBracket"
+        }
+    }
 
     fun isCloseSentence() = this is CloseSentenceToken
 
@@ -63,6 +155,10 @@ sealed class Token {
     fun isOpenParenthesis() = this is OpenParenthesisToken
 
     fun isCloseParenthesis() = this is CloseParenthesisToken
+
+    fun isVariableToken() = this is VariableToken
+
+    fun isTypeToken() = this is IntTypeToken || this is StringTypeToken || this is DoubleTypeToken
 
     fun isMathOperator() = this is OperatorSumToken ||
             this is OperatorDivisionToken ||

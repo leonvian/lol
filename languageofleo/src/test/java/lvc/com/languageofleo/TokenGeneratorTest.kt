@@ -8,14 +8,14 @@ class TokenGeneratorTest {
     @Test
     fun `test generate tokens sum`() {
         val CODE_TEST =
-                    "  variable integer x = 3;\n" +
-                    "  variable integer y = 5;\n" +
-                    "   startProgram {\n" +
-                    "     variable integer z = x + y;\n" +
-                    "     print(z);\n" +
+                    "  variable integer x = 3;" +
+                    "  variable integer y = 5;" +
+                    "   startProgram {" +
+                    "     variable integer z = x + y;" +
+                    "     print(z);" +
                     "  }"
 
-        val tokenGenerator = TokenGenerator()
+        val tokenGenerator = TokenGenerator2()
         val tokens = tokenGenerator.generateTokens(CODE_TEST)
 
         assert(tokens[0] is Token.VariableToken)
@@ -57,9 +57,9 @@ class TokenGeneratorTest {
 
     @Test
     fun `test generate tokens variable string`() {
-        val CODE_TEST = "variable string y = \"leonardo\";"
+        val CODE_TEST = "variable string y = \"Leonardo Viana Casasanta\";"
 
-        val tokenGenerator = TokenGenerator()
+        val tokenGenerator = TokenGenerator2()
         val tokens = tokenGenerator.generateTokens(CODE_TEST)
 
         Assert.assertEquals(8, tokens.size )
@@ -76,7 +76,7 @@ class TokenGeneratorTest {
         assert(tokens[4] is Token.StringBracket)
 
         assert(tokens[5] is Token.LiteralStringToken)
-        assert((tokens[5] as Token.LiteralStringToken).literalValue == "leonardo")
+        assert((tokens[5] as Token.LiteralStringToken).literalValue == "Leonardo Viana Casasanta")
 
         assert(tokens[6] is Token.StringBracket)
 
@@ -84,43 +84,9 @@ class TokenGeneratorTest {
     }
 
     @Test
-    fun `test generate tokens variable string long`() {
-        val CODE_TEST = "variable string y = \"leonardo viana casasanta\";"
-
-        val tokenGenerator = TokenGenerator()
-        val tokens = tokenGenerator.generateTokens(CODE_TEST)
-
-        Assert.assertEquals(10, tokens.size )
-
-        assert(tokens[0] is Token.VariableToken)
-
-        assert(tokens[1] is Token.StringTypeToken)
-
-        assert(tokens[2] is Token.NameToken)
-        assert((tokens[2] as Token.NameToken).name == "y")
-
-        assert(tokens[3] is Token.AssignValueToken)
-
-        assert(tokens[4] is Token.StringBracket)
-
-        assert(tokens[5] is Token.LiteralStringToken)
-        assert((tokens[5] as Token.LiteralStringToken).literalValue == "leonardo")
-
-        assert(tokens[6] is Token.LiteralStringToken)
-        assert((tokens[6] as Token.LiteralStringToken).literalValue == "viana")
-
-        assert(tokens[7] is Token.LiteralStringToken)
-        assert((tokens[7] as Token.LiteralStringToken).literalValue == "casasanta")
-
-        assert(tokens[8] is Token.StringBracket)
-
-        assert(tokens[9] is Token.CloseSentenceToken)
-    }
-
-    @Test
     fun `test generate tokens for assign variable int`() {
         val testCode = "variable integer x=10;"
-        val tokenGenerator = TokenGenerator()
+        val tokenGenerator = TokenGenerator2()
         val tokens = tokenGenerator.generateTokens(testCode)
 
         Assert.assertEquals(6, tokens.size )
@@ -138,7 +104,7 @@ class TokenGeneratorTest {
     fun `test generate tokens for two assign variable int`() {
         val testCode = "variable integer x=10; " +
                 "variable integer y = 11;"
-        val tokenGenerator = TokenGenerator()
+        val tokenGenerator = TokenGenerator2()
         val tokens = tokenGenerator.generateTokens(testCode)
 
         Assert.assertEquals(12, tokens.size )
@@ -158,6 +124,29 @@ class TokenGeneratorTest {
         assert(tokens[10] is Token.LiteralIntToken)
         assert((tokens[10] as Token.LiteralIntToken).literalValue == 11)
         assert(tokens[11] is Token.CloseSentenceToken)
+    }
+
+    @Test
+    fun testSimpleStringPrint() {
+        val testCode =
+            "startProgram {" +
+                    "print(\"Hello World\");" +
+                    "}"
+
+        val tokenGenerator = TokenGenerator2()
+        val tokens = tokenGenerator.generateTokens(testCode)
+
+        assert(tokens[0] is Token.StartProgram)
+        assert(tokens[1] is Token.OpenBlockToken)
+        assert(tokens[2] is Token.Print)
+        assert(tokens[3] is Token.OpenParenthesisToken)
+        assert(tokens[4] is Token.StringBracket)
+        assert(tokens[5] is Token.LiteralStringToken)
+        assert((tokens[5] as Token.LiteralStringToken).literalValue == "Hello World")
+        assert(tokens[6] is Token.StringBracket)
+        assert(tokens[7] is Token.CloseParenthesisToken)
+        assert(tokens[8] is Token.CloseSentenceToken)
+        assert(tokens[9] is Token.CloseBlockToken)
     }
 
 }

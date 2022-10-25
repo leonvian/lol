@@ -1,28 +1,40 @@
 package lvc.com.languageofleo
 
 
-enum class ReservedWords(val word: String) {
+/**
+ *
+ * Need space is true if the reserved word needs to be around spaces to be valid.
+ *
+ * example:
+ * variable string name="Leonardo"
+ *
+ * The reserved words variable, string needs to have space
+ * On the other hand = and "" doesn't need
+ */
+enum class ReservedWords(
+    val word: String,
+    val needSpace: Boolean = true
+) {
 
     IF("if"),
     INT_TYPE("integer"),
     STRING_TYPE("string"),
     DOUBLE_TYPE("double"),
     METHOD("method"),
-    OPEN_PARENTHESIS("("),
-    CLOSE_PARENTHESIS(")"),
-    OPEN_BLOCK("{"),
-    CLOSE_BLOCK("}"),
-    CLOSE_LINE(";"),
-    ASSIGN_SYMBOL_LINE("="),
+    OPEN_PARENTHESIS("(", false),
+    CLOSE_PARENTHESIS(")", false),
+    OPEN_BLOCK("{", false),
+    CLOSE_BLOCK("}", false),
+    CLOSE_LINE(";", false),
+    ASSIGN_SYMBOL_LINE("=", false),
     VARIABLE("variable"),
     START_PROGRAM("startProgram"),
     PRINT("print"),
-    OPERATOR_SUM("+"),
-    OPERATOR_SUBTRACT("-"),
-    OPERATOR_MUlTIPLY("*"),
-    STRING_BRACKET("\""),
-    OPERATOR_DIVISION("/");
-
+    OPERATOR_SUM("+", false),
+    OPERATOR_SUBTRACT("-", false),
+    OPERATOR_MUlTIPLICATION("*", false),
+    STRING_BRACKET("\"", false),
+    OPERATOR_DIVISION("/", false);
 
     companion object {
 
@@ -44,15 +56,14 @@ enum class ReservedWords(val word: String) {
             return false
         }
 
-        fun getReservedWordOn(target: String): ReservedWords? {
-            values().forEach {
-                if (target.contains(it.word))
-                    return it
-            }
 
-            return null
+        fun getSpacedReservedWords(): List<ReservedWords> = values().filter {
+            it.needSpace
         }
 
+        fun getNotSpacedReservedWords(): List<ReservedWords> = values().filter {
+            !it.needSpace
+        }
     }
 
 }

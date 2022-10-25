@@ -121,9 +121,9 @@ class InterpreterTest  {
     @Test
     fun testSimpleStringPrint() {
         val testCode =
-                "    startProgram {\n" +
-                "         print(\"Hello World\");\n" +
-                "      }\n"
+                "startProgram {" +
+                "print(\"Hello World\");" +
+                "}"
 
         val interpreter = Interpreter()
         val logs = interpreter.execute(testCode)

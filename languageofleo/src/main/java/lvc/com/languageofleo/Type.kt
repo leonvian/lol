@@ -1,8 +1,7 @@
 package lvc.com.languageofleo
 
-enum class Type  {
+enum class Type(nomenclature: String)  {
 
-    STRING, INT, DOUBLE
-
+    STRING("string"), INT("integer") , DOUBLE("double")
 
 }
